@@ -63,14 +63,14 @@ class ConfigTests(unittest.TestCase):
         import tempfile
         self.tmp = tempfile.TemporaryDirectory()
         self.path = Path(self.tmp.name) / "nested" / "config.json"
-        self._old = os.environ.get("PROMPT_OPTIMIZER_CONFIG")
-        os.environ["PROMPT_OPTIMIZER_CONFIG"] = str(self.path)
+        self._old = os.environ.get("PROMPTER_CONFIG")
+        os.environ["PROMPTER_CONFIG"] = str(self.path)
 
     def tearDown(self):
         if self._old is None:
-            os.environ.pop("PROMPT_OPTIMIZER_CONFIG", None)
+            os.environ.pop("PROMPTER_CONFIG", None)
         else:
-            os.environ["PROMPT_OPTIMIZER_CONFIG"] = self._old
+            os.environ["PROMPTER_CONFIG"] = self._old
         self.tmp.cleanup()
 
     def test_missing_config_reads_empty(self):
@@ -89,18 +89,18 @@ class ConfigTests(unittest.TestCase):
 
 class CredentialTests(unittest.TestCase):
     def setUp(self):
-        self._old = os.environ.get("PROMPT_OPTIMIZER_CONFIG")
+        self._old = os.environ.get("PROMPTER_CONFIG")
         import tempfile
         self.tmp = tempfile.TemporaryDirectory()
-        os.environ["PROMPT_OPTIMIZER_CONFIG"] = str(Path(self.tmp.name) / "config.json")
+        os.environ["PROMPTER_CONFIG"] = str(Path(self.tmp.name) / "config.json")
         for spec in providers.PROVIDERS.values():
             os.environ.pop(spec["env"], None)
 
     def tearDown(self):
         if self._old is None:
-            os.environ.pop("PROMPT_OPTIMIZER_CONFIG", None)
+            os.environ.pop("PROMPTER_CONFIG", None)
         else:
-            os.environ["PROMPT_OPTIMIZER_CONFIG"] = self._old
+            os.environ["PROMPTER_CONFIG"] = self._old
         self.tmp.cleanup()
 
     def _action(self, provider=None):

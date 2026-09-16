@@ -12,14 +12,14 @@ from pathlib import Path
 
 
 def config_path():
-    override = os.environ.get("PROMPT_OPTIMIZER_CONFIG")
+    override = os.environ.get("PROMPTER_CONFIG")
     if override:
         return Path(override)
     if os.name == "nt":
         base = os.environ.get("APPDATA") or Path.home() / "AppData" / "Roaming"
     else:
         base = os.environ.get("XDG_CONFIG_HOME") or Path.home() / ".config"
-    return Path(base) / "prompt-optimizer" / "config.json"
+    return Path(base) / "prompter-cli" / "config.json"
 
 
 def load():

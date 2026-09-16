@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "prompt-optimizer"
+name = "prompter-cli"
 version = "0.1.0"
 description = "Turn a raw prompt into a production-ready prompt, optimized for cache hits and speed."
 readme = "README.md"
@@ -27,8 +27,8 @@ dependencies = ["openai>=1.50.0"]
 optimize = "prompt_optimizer.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/YESSS-STAR/prompt-optimizer"
-Issues = "https://github.com/YESSS-STAR/prompt-optimizer/issues"
+Homepage = "https://github.com/YESSS-STAR/prompter-cli"
+Issues = "https://github.com/YESSS-STAR/prompter-cli/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/prompt_optimizer"]

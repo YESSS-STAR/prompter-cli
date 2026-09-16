@@ -1,8 +1,8 @@
-# prompt-optimizer
+# prompter-cli
 
 Turn a raw prompt into a production-ready prompt, right from your terminal.
 
-`prompt-optimizer` installs one command, `optimize`. It sends your prompt through
+`prompter-cli` installs one command, `optimize`. It sends your prompt through
 a Principal-Prompt-Engineer instruction set and returns a rewritten prompt —
 with a persona, explicit constraints, an output format, and `{{variable}}`
 placeholders — plus an explanation of what changed and why.
@@ -15,7 +15,7 @@ redundancy is removed without removing a single requirement.
 ## Install
 
 ```bash
-pip install prompt-optimizer
+pip install prompter-cli
 ```
 
 ## Setup
@@ -99,10 +99,10 @@ optimize <api_key> openai --model gpt-4o
 
 By default:
 
-- Linux/macOS: `~/.config/prompt-optimizer/config.json`
-- Windows: `%APPDATA%\prompt-optimizer\config.json`
+- Linux/macOS: `~/.config/prompter-cli/config.json`
+- Windows: `%APPDATA%\prompter-cli\config.json`
 
-Override the location with the `PROMPT_OPTIMIZER_CONFIG` environment variable.
+Override the location with the `PROMPTER_CONFIG` environment variable.
 
 **The key is stored in plaintext.** That is a deliberate tradeoff for a CLI. The
 file is created with mode `0600` on Unix, but on Windows the permission bits are
@@ -127,11 +127,23 @@ optimize --system-file my_system_prompt.md "write me a sql query"
 ## Development
 
 ```bash
-git clone https://github.com/YESSS-STAR/prompt-optimizer
-cd prompt-optimizer
+git clone https://github.com/YESSS-STAR/prompter-cli
+cd prompter-cli
 python -m pip install -e .
 python -m unittest discover -s tests
 ```
+
+### Releasing
+
+Publishing uses PyPI trusted publishing, so no API token is stored anywhere.
+Pushing a `v*` tag builds, tests and publishes via `.github/workflows/publish.yml`:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+Bump `version` in `pyproject.toml` before tagging.
 
 ## License
 

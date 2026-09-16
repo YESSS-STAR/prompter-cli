@@ -62,7 +62,7 @@ def build_parser():
     parser.add_argument("--system-file", metavar="PATH", help="use this file as the optimizer system prompt")
     parser.add_argument("--json", action="store_true", help="emit {analysis, optimized} as JSON")
     parser.add_argument("--quiet", "-q", action="store_true", help="print only the optimized prompt")
-    parser.add_argument("--version", action="version", version="prompt-optimizer " + __version__)
+    parser.add_argument("--version", action="version", version="prompter-cli " + __version__)
     return parser
 
 
