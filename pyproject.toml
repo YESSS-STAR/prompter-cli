@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "prompter-cli"
-version = "0.1.0"
+version = "0.2.0"
 description = "Turn a raw prompt into a production-ready prompt, optimized for cache hits and speed."
 readme = "README.md"
 requires-python = ">=3.9"

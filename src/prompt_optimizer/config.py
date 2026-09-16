@@ -27,17 +27,23 @@ def load():
     if not path.exists():
         return {}
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        # utf-8-sig so a config saved by an editor that adds a BOM still reads.
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
     except (OSError, ValueError):
         return {}
     return data if isinstance(data, dict) else {}
 
 
 def save(data):
+    """Write the config. Raises OSError so the CLI can report it as a clean error."""
     path = config_path()
     path.parent.mkdir(parents=True, exist_ok=True)
     fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
     with os.fdopen(fd, "w", encoding="utf-8") as fh:
         json.dump(data, fh, indent=2)
         fh.write("\n")
+    if os.name != "nt":
+        # Windows ignores the mode argument and applies ACL inheritance instead,
+        # so this is only meaningful on Unix.
+        os.chmod(path, 0o600)
     return path

@@ -9,15 +9,21 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    name: Test and build
+  test:
+    name: Test on ${{ matrix.python-version }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The floor here must match requires-python in pyproject.toml, or the
+        # claim is untested.
+        python-version: ["3.9", "3.11", "3.13"]
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: ${{ matrix.python-version }}
 
       - name: Install
         run: |
@@ -26,6 +32,17 @@ jobs:
 
       - name: Test
         run: python -m unittest discover -s tests -v
+
+  build:
+    name: Build sdist and wheel
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
 
       - name: Build sdist and wheel
         run: |
